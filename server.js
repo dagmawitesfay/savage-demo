@@ -67,7 +67,7 @@ app.put('/thumbsDown', (req, res) => {
     .findOneAndUpdate({
         _id: new ObjectID(req.body.id) // update by id 
       }, {
-        $inc: { thumbDown: 1 }
+        $inc: { thumbDown: -1 }
       },
        {
     sort: {_id: -1},
