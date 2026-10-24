@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const {ObjectID} = require('mongodb')
 const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
@@ -39,19 +40,46 @@ app.post('/messages', (req, res) => {
 })
 
 app.put('/messages', (req, res) => {
+  
   db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
-    }
-  }, {
+
+    .findOneAndUpdate({
+        _id: new ObjectID(req.body.id) // update by id 
+      }, {
+        $inc: { thumbUp: 1 }
+      }, 
+       {
     sort: {_id: -1},
-    upsert: true
+    upsert: true // conjuction of update keyword and insert 
   }, (err, result) => {
     if (err) return res.send(err)
     res.send(result)
+  console.log(req.body,result.value)
   })
+
 })
+
+
+app.put('/thumbsDown', (req, res) => {
+
+  db.collection('messages')
+
+    .findOneAndUpdate({
+        _id: new ObjectID(req.body.id) // update by id 
+      }, {
+        $inc: { thumbDown: 1 }
+      },
+       {
+    sort: {_id: -1},
+    upsert: true // conjuction of update keyword and insert 
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  console.log(req.body,result.value)
+  })
+
+})
+
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
