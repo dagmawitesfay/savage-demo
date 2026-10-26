@@ -2,6 +2,10 @@
 
 A small Node.js + Express app that stores fan messages in MongoDB and lets users add, upvote, downvote, and delete posts from a simple EJS front end.
 
+# Deployed Link
+
+https://savage-demo-2xs7.onrender.com/
+
 ## Features
 
 - Display a list of saved messages on the home page
