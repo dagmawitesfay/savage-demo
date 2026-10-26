@@ -10,7 +10,7 @@ const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites
 
 const dbName = "demo";
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if(error) {
             throw error;
